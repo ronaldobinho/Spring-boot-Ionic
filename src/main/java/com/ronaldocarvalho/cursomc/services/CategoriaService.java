@@ -24,4 +24,13 @@ public class CategoriaService {
 		return obj;
 
 	}
+	
+	
+	public Categoria insert(Categoria obj) {
+		//Seta o id como nulo para garantir que é uma insersao
+		obj.setId(null);
+		
+		return repo.save(obj);
+		
+	}
 }
