@@ -1,9 +1,6 @@
 package com.ronaldocarvalho.cursomc.resources;
 
-
 import java.net.URI;
-
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +24,9 @@ public class CategoriaResource {
 
 	// Requisicao do id a ser buscado pelo metodo get
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 			
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 
 	}
@@ -48,4 +45,14 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+	    obj.setId(id);
+		obj = service.update(obj);
+		//Retorna no formatdo JSon no formado Entity vazio
+		return ResponseEntity.noContent().build();
+	}
+          
+
+    
 }
