@@ -25,34 +25,39 @@ public class CategoriaResource {
 	// Requisicao do id a ser buscado pelo metodo get
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-			
+
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	                                    //@RequestBody converte o objeto JSON recebido para java 
+	// @RequestBody converte o objeto JSON recebido para java
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = service.insert(obj);
-		
-		//fornece o id retornado do metodo HTTP que retornou para o obj
-		//Atribui ao metodo HTTP o id salvo do objeto, retorna para o ResponseEntity esse id disponibilizando o link
-		///Categoria/({/ID}
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(obj.getId()).toUri();	
+
+		// fornece o id retornado do metodo HTTP que retornou para o obj
+		// Atribui ao metodo HTTP o id salvo do objeto, retorna para o ResponseEntity
+		// esse id disponibilizando o link
+		/// Categoria/({/ID}
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
-	
-	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
-	    obj.setId(id);
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+		obj.setId(id);
 		obj = service.update(obj);
-		//Retorna no formatdo JSon no formado Entity vazio
+		// Retorna no formatdo JSon no formado Entity vazio
 		return ResponseEntity.noContent().build();
 	}
-          
 
-    
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		
+		return ResponseEntity.noContent().build();
+	}
+
 }
