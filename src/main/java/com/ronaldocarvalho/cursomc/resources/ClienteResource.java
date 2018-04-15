@@ -1,6 +1,7 @@
 package com.ronaldocarvalho.cursomc.resources;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.ronaldocarvalho.cursomc.domain.Categoria;
 import com.ronaldocarvalho.cursomc.domain.Cliente;
+import com.ronaldocarvalho.cursomc.dto.CategoriaDTO;
 import com.ronaldocarvalho.cursomc.dto.ClienteDTO;
+import com.ronaldocarvalho.cursomc.dto.ClienteNewDTO;
 import com.ronaldocarvalho.cursomc.services.ClienteService;
 
 //Camada Rest
@@ -27,6 +32,21 @@ public class ClienteResource {
 	// Acesso a camada Servico
 	@Autowired
 	private ClienteService service;
+	
+	@RequestMapping(method = RequestMethod.POST)
+	// @RequestBody converte o objeto JSON recebido para java
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+
+		// fornece o id retornado do metodo HTTP que retornou para o obj
+		// Atribui ao metodo HTTP o id salvo do objeto, retorna para o ResponseEntity
+		// esse id disponibilizando o link
+		/// Categoria/({/ID}
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
+	}
 
 	// Requisicao do id a ser buscado pelo metodo get
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
