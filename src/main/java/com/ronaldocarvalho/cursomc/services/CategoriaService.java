@@ -27,7 +27,7 @@ public class CategoriaService {
 		// Tratamento de excessao
 		if (obj == null) {
 			throw new ObjectNotFoundException(
-					"Objeto não encontrado! ID: " + id + ", Tipo: " + Categoria.class.getName());
+					"Objeto não enco	ntrado! ID: " + id + ", Tipo: " + Categoria.class.getName());
 
 		}
 		return obj;
