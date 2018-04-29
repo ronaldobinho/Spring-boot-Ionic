@@ -4,11 +4,9 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ronaldocarvalho.cursomc.domain.ItemPedido;
 import com.ronaldocarvalho.cursomc.domain.PagamentoComBoleto;
-import com.ronaldocarvalho.cursomc.domain.PagamentoComCartao;
 import com.ronaldocarvalho.cursomc.domain.Pedido;
 import com.ronaldocarvalho.cursomc.domain.enums.EstadoPagamento;
 import com.ronaldocarvalho.cursomc.repositoiries.ClienteRepository;
@@ -38,6 +36,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EmailService emailService;
 
 	public Pedido find(Integer id) {
 		Pedido obj = repo.findOne(id);
@@ -69,7 +70,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.save(obj.getItens());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
