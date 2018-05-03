@@ -13,12 +13,15 @@ import org.springframework.stereotype.Service;
 import com.ronaldocarvalho.cursomc.domain.Cidade;
 import com.ronaldocarvalho.cursomc.domain.Cliente;
 import com.ronaldocarvalho.cursomc.domain.Endereco;
+import com.ronaldocarvalho.cursomc.domain.enums.Perfil;
 import com.ronaldocarvalho.cursomc.domain.enums.TipoCliente;
 import com.ronaldocarvalho.cursomc.dto.ClienteDTO;
 import com.ronaldocarvalho.cursomc.dto.ClienteNewDTO;
 import com.ronaldocarvalho.cursomc.repositoiries.CidadeRespository;
 import com.ronaldocarvalho.cursomc.repositoiries.ClienteRepository;
 import com.ronaldocarvalho.cursomc.repositoiries.EnderecoRepository;
+import com.ronaldocarvalho.cursomc.security.UserSS;
+import com.ronaldocarvalho.cursomc.services.exceptions.AuthorizationException;
 import com.ronaldocarvalho.cursomc.services.exceptions.DataIntegrityExpetion;
 import com.ronaldocarvalho.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -27,7 +30,7 @@ public class ClienteService {
 	// Acesso a camada de repository
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	private ClienteRepository repo;
 
@@ -38,6 +41,11 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	public Cliente find(Integer id) {
+
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Cliente obj = repo.findOne(id);
 		// Tratamento de excessao
 		if (obj == null) {
@@ -100,10 +108,10 @@ public class ClienteService {
 				objDto.getBairro(), objDto.getCep(), cli, cid);
 
 		cli.getEnderecos().add(end);
-		
+
 		cli.getTelefones().add(objDto.getTelefone1());
 		if (objDto.getTelefone2() != null) {
-			cli.getTelefones().add(objDto.getTelefone2());	
+			cli.getTelefones().add(objDto.getTelefone2());
 		}
 		if (objDto.getTelefone3() != null) {
 			cli.getTelefones().add(objDto.getTelefone3());
