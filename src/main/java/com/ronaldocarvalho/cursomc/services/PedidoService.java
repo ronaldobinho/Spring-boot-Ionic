@@ -19,7 +19,7 @@ import com.ronaldocarvalho.cursomc.repositoiries.PagamentoRepository;
 import com.ronaldocarvalho.cursomc.repositoiries.PedidoRepository;
 import com.ronaldocarvalho.cursomc.repositoiries.ProdutoRepository;
 import com.ronaldocarvalho.cursomc.security.UserSS;
-import com.ronaldocarvalho.cursomc.services.exceptions.AutorizathionException;
+import com.ronaldocarvalho.cursomc.services.exceptions.AuthorizationException;
 import com.ronaldocarvalho.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -81,13 +81,14 @@ public class PedidoService {
 	}
 
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		UserSS user = UserService.authenticated();
-		if(user == null) {
-			throw new AutorizathionException("Acesso Negado");
-		}
-		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Cliente cliente = clienteRepository.findOne(user.getId());
-		return repo.findByCliente(cliente, pageRequest);
+				UserSS user = UserService.authenticated();
+				if (user == null) {
+					throw new AuthorizationException("Acesso negado");
+				}
+				PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+				Cliente cliente =  clienteRepository.findOne(user.getId());
+				return repo.findByCliente(cliente, pageRequest);
+			}
 
 	}
-}
+
