@@ -34,6 +34,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
+	
 	@JsonIgnore
 	private String senha;
 
@@ -174,4 +175,6 @@ public class Cliente implements Serializable {
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
 	}
+
+
 }
