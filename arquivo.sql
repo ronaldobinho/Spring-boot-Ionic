@@ -177,7 +177,7 @@ CREATE TABLE `item_pedido` (
 
 LOCK TABLES `item_pedido` WRITE;
 /*!40000 ALTER TABLE `item_pedido` DISABLE KEYS */;
-INSERT INTO `item_pedido` VALUES (0,2000,1,1,1),(0,80,2,1,3),(100,800,1,2,2),(0,2000,1,3,12),(0,80,2,3,14),(100,800,1,4,13);
+INSERT INTO `item_pedido` VALUES (0,2000,1,1,1),(0,80,2,1,3),(100,800,1,2,2),(0,2000,1,3,12),(0,80,2,3,14),(100,800,1,4,13),(0,2000,1,5,1),(0,80,2,5,3),(0,2000,1,6,1),(0,80,2,6,3),(0,2000,1,7,1),(0,80,2,7,3),(0,2000,1,8,1),(0,80,2,8,3),(0,2000,1,9,1),(0,80,2,9,3),(0,2000,1,10,1),(0,80,2,10,3);
 /*!40000 ALTER TABLE `item_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `pagamento` (
 
 LOCK TABLES `pagamento` WRITE;
 /*!40000 ALTER TABLE `pagamento` DISABLE KEYS */;
-INSERT INTO `pagamento` VALUES (1,2),(2,1),(3,2),(4,1);
+INSERT INTO `pagamento` VALUES (1,2),(2,1),(3,2),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1);
 /*!40000 ALTER TABLE `pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +253,7 @@ CREATE TABLE `pagamento_com_cartao` (
 
 LOCK TABLES `pagamento_com_cartao` WRITE;
 /*!40000 ALTER TABLE `pagamento_com_cartao` DISABLE KEYS */;
-INSERT INTO `pagamento_com_cartao` VALUES (6,1),(6,3);
+INSERT INTO `pagamento_com_cartao` VALUES (6,1),(6,3),(10,5),(10,6),(10,7),(10,8),(10,9),(10,10);
 /*!40000 ALTER TABLE `pagamento_com_cartao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +274,7 @@ CREATE TABLE `pedido` (
   KEY `FK1fihyy2fnocpuwc74674qmfkv` (`endereco_de_entrega_id`),
   CONSTRAINT `FK1fihyy2fnocpuwc74674qmfkv` FOREIGN KEY (`endereco_de_entrega_id`) REFERENCES `endereco` (`id`),
   CONSTRAINT `FK30s8j2ktpay6of18lbyqn3632` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (1,'2017-09-30 10:32:00',1,1),(2,'2017-10-10 19:35:00',1,2),(3,'2017-09-30 10:32:00',2,3),(4,'2017-10-10 19:35:00',2,4);
+INSERT INTO `pedido` VALUES (1,'2017-09-30 10:32:00',1,1),(2,'2017-10-10 19:35:00',1,2),(3,'2017-09-30 10:32:00',2,3),(4,'2017-10-10 19:35:00',2,4),(5,'2018-04-29 08:13:56',1,1),(6,'2018-04-29 08:15:33',1,1),(7,'2018-04-29 23:48:36',1,1),(8,'2018-04-29 23:49:34',1,1),(9,'2018-04-30 00:06:36',1,1),(10,'2018-04-30 00:21:44',1,1);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-28  1:42:10
+-- Dump completed on 2018-05-26  0:46:03
